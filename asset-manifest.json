@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/HIIT/static/css/main.afb1cb6b.chunk.css",
+    "main.css": "/HIIT/static/css/main.bc29b3ad.chunk.css",
     "main.js": "/HIIT/static/js/main.2d09bd79.chunk.js",
     "main.js.map": "/HIIT/static/js/main.2d09bd79.chunk.js.map",
     "runtime~main.js": "/HIIT/static/js/runtime~main.83aedd31.js",
@@ -8,8 +8,9 @@
     "static/js/2.1bb12975.chunk.js": "/HIIT/static/js/2.1bb12975.chunk.js",
     "static/js/2.1bb12975.chunk.js.map": "/HIIT/static/js/2.1bb12975.chunk.js.map",
     "index.html": "/HIIT/index.html",
-    "precache-manifest.fb3d7e506b9cc9c8e43978a994caaf7b.js": "/HIIT/precache-manifest.fb3d7e506b9cc9c8e43978a994caaf7b.js",
+    "precache-manifest.c2a0c00e9df3ad4b9b292664607475bd.js": "/HIIT/precache-manifest.c2a0c00e9df3ad4b9b292664607475bd.js",
     "service-worker.js": "/HIIT/service-worker.js",
-    "static/css/main.afb1cb6b.chunk.css.map": "/HIIT/static/css/main.afb1cb6b.chunk.css.map"
+    "static/css/main.bc29b3ad.chunk.css.map": "/HIIT/static/css/main.bc29b3ad.chunk.css.map",
+    "static/media/main.css": "/HIIT/static/media/background.e8028125.jpg"
   }
 }
