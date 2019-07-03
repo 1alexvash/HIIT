@@ -1,0 +1,172 @@
+@import "reset";
+@import "responsive";
+@import "fonts/font";
+
+body {
+  font-size: 20px;
+  font-family: "Noto Sans", sans-serif;
+  animation: bodyAnimation 5s;
+  background: black;
+  @keyframes bodyAnimation {
+    from {
+      background: white;
+    }
+    to {
+      background: black;
+    }
+  }
+  &:after {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("/background.jpg");
+    background-size: cover;
+    background-position: 50%;
+    height: 100vh;
+    opacity: 0.85;
+    z-index: -1;
+  }
+}
+
+.App {
+  width: 320px;
+  padding: 10px 20px;
+  margin: auto;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: rgba(black, 0.7);
+  box-shadow: 0 0 10px black;
+  color: white;
+
+  @include responsive(360px) {
+    width: 100%;
+  }
+  form {
+    .intervals {
+      margin: 10px 0;
+      input {
+        padding: 5px 10px;
+        border: 3px solid black;
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 5px deepskyblue;
+        }
+      }
+    }
+    .rest-work {
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      section {
+        border: 3px solid black;
+        width: 40%;
+        &.rest {
+          label {
+            background: linear-gradient(green, lighten(green, 15%), green);
+          }
+        }
+        &.work {
+          label {
+            background: linear-gradient(red, darken(red, 15%), red);
+          }
+        }
+        label {
+          display: block;
+          width: 100%;
+          padding: 5px 10px;
+          text-shadow: 1px 2px 3px #333;
+          span {
+            font-size: 16px;
+          }
+        }
+        input {
+          padding: 5px 10px;
+          &:focus {
+            outline: none;
+            box-shadow: 0 0 5px deepskyblue;
+          }
+        }
+      }
+    }
+    .duration {
+      display: flex;
+      justify-content: space-between;
+    }
+    .start {
+      margin: 20px 0;
+      text-align: center;
+      button {
+        cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 4px;
+        color: white;
+        text-shadow: 1px 2px 3px #333;
+        background: linear-gradient(
+          deepskyblue,
+          darken(deepskyblue, 20%),
+          deepskyblue
+        );
+        transition: 0.3s;
+        &:hover {
+          border-radius: 8px;
+        }
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 5px deepskyblue;
+        }
+      }
+    }
+  }
+  .progress {
+    margin: 10px 0;
+    border: 3px solid black;
+    position: relative;
+    height: 12px;
+    background: grey;
+    display: flex;
+    .bar {
+      &.rest {
+        background: linear-gradient(deepskyblue, lighten(deepskyblue, 20%));
+      }
+      &.work {
+        background: linear-gradient(red, lighten(red, 10%));
+      }
+    }
+    .ball {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      border: 2px solid white;
+      background: black;
+      @keyframes pushBall {
+        from {
+          left: 0;
+        }
+        to {
+          left: 100%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes ball {
+  from {
+    background: green;
+  }
+  to {
+    background: red;
+  }
+}
