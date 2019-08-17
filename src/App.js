@@ -1,11 +1,13 @@
 import React, { Fragment, useReducer, useEffect, useRef } from "react";
 import "./scss/main.css";
 
+import TimerSettings from "./components/TimerSettings/TimerSettings";
+import WorkoutStatus from "./components/WorkoutStatus/WorkoutStatus";
+import Bars from "./components/Bars/Bars";
+
 import noSleepLibrary from "nosleep.js";
 
 import reducer from "./reducer";
-
-import getWorkoutTime from "./utils/getWorkoutTime";
 
 import ready from "./sounds/ready.mp3";
 import steady from "./sounds/steady.mp3";
@@ -82,7 +84,6 @@ const App = () => {
         dispatch({
           type: "remainingTypeReduceSecond"
         });
-        console.log(state);
       }, 1000);
 
       let timer;
@@ -188,89 +189,20 @@ const App = () => {
   return (
     <div className="App">
       {state.working === false ? (
-        <form onSubmit={start}>
-          <div className="intervals">
-            Intervals:
-            <input
-              type="number"
-              onChange={e => inputOnChange(e)}
-              name="intervals"
-              value={state.intervals}
-              min="1"
-              required
-            />
-          </div>
-          <div className="timing">
-            <section className="timing-work">
-              <label>
-                Work <span>(s)</span>
-              </label>
-              <input
-                type="number"
-                onChange={e => inputOnChange(e)}
-                name="work"
-                value={state.work}
-                placeholder="15 s"
-                min="1"
-                required
-              />
-            </section>
-            <section className="timing-rest">
-              <label>
-                Rest <span>(s)</span>
-              </label>
-              <input
-                type="number"
-                onChange={e => inputOnChange(e)}
-                name="rest"
-                value={state.rest}
-                placeholder="45 s"
-                min="1"
-                required
-              />
-            </section>
-          </div>
-          <div className="duration">
-            <em>Workout Duration:</em>
-            <strong>{getWorkoutTime(state.duration)}</strong>
-          </div>
-          <p className="sounds">
-            <em>Sounds:</em>
-            <input
-              type="checkbox"
-              name="sounds"
-              checked={state.soundsAvailable}
-              onChange={e =>
-                dispatch({ type: "toggleSounds", payload: e.target.checked })
-              }
-            />
-          </p>
-          <div className="start">
-            <button>Start</button>
-          </div>
-        </form>
+        <TimerSettings
+          start={start}
+          inputOnChange={inputOnChange}
+          state={state}
+          dispatch={dispatch}
+        />
       ) : (
         <Fragment>
-          <div className="remaining-time">
-            <span>
-              {state.currentInterval} / {state.intervals}
-            </span>
-            <span>{getWorkoutTime(state.remainingTime)}</span>
-          </div>
-          <p className={`status ${state.progressStatusClass}`}>
-            {state.progressStatusText}
-          </p>
+          <WorkoutStatus state={state} />
         </Fragment>
       )}
 
       <div className="progress">
-        {state.bars.map((bar, index) => (
-          <div
-            key={index}
-            className={`bar ${bar.type === "rest" ? "rest" : "work"}`}
-            style={{ width: bar.width + "%" }}
-          />
-        ))}
+        <Bars bars={state.bars} />
         <div className="ball" ref={ball} />
       </div>
     </div>

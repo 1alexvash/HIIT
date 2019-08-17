@@ -84,22 +84,22 @@ body:after {
   }
 }
 
-.App form .intervals {
+.App .timer-settings .intervals {
   margin: 10px 0;
 }
 
-.App form .intervals input {
+.App .timer-settings .intervals input {
   padding: 5px 10px;
   border: 3px solid black;
 }
 
-.App form .intervals input:focus {
+.App .timer-settings .intervals input:focus {
   outline: none;
   -webkit-box-shadow: 0 0 5px deepskyblue;
           box-shadow: 0 0 5px deepskyblue;
 }
 
-.App form .timing {
+.App .timer-settings .timing {
   margin: 10px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -109,43 +109,43 @@ body:after {
           justify-content: space-between;
 }
 
-.App form .timing section {
+.App .timer-settings .timing section {
   border: 3px solid black;
   width: 40%;
 }
 
-.App form .timing section.timing-rest label {
+.App .timer-settings .timing section.timing-rest label {
   background: -webkit-gradient(linear, left top, left bottom, from(green), color-stop(#00cd00), to(green));
   background: linear-gradient(green, #00cd00, green);
 }
 
-.App form .timing section.timing-work label {
+.App .timer-settings .timing section.timing-work label {
   background: -webkit-gradient(linear, left top, left bottom, from(red), color-stop(#b30000), to(red));
   background: linear-gradient(red, #b30000, red);
 }
 
-.App form .timing section label {
+.App .timer-settings .timing section label {
   display: block;
   width: 100%;
   padding: 5px 10px;
   text-shadow: 1px 2px 3px #333;
 }
 
-.App form .timing section label span {
+.App .timer-settings .timing section label span {
   font-size: 16px;
 }
 
-.App form .timing section input {
+.App .timer-settings .timing section input {
   padding: 5px 10px;
 }
 
-.App form .timing section input:focus {
+.App .timer-settings .timing section input:focus {
   outline: none;
   -webkit-box-shadow: 0 0 5px deepskyblue;
           box-shadow: 0 0 5px deepskyblue;
 }
 
-.App form .duration {
+.App .timer-settings .workout-duration {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -154,7 +154,7 @@ body:after {
           justify-content: space-between;
 }
 
-.App form .sounds {
+.App .timer-settings .sounds {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -166,17 +166,17 @@ body:after {
           justify-content: space-between;
 }
 
-.App form .sounds input {
+.App .timer-settings .sounds input {
   width: 20px;
   height: 20px;
 }
 
-.App form .start {
+.App .timer-settings .start {
   margin: 20px 0;
   text-align: center;
 }
 
-.App form .start button {
+.App .timer-settings .start button {
   cursor: pointer;
   padding: 10px 20px;
   border-radius: 4px;
@@ -188,11 +188,11 @@ body:after {
   transition: 0.3s;
 }
 
-.App form .start button:hover {
+.App .timer-settings .start button:hover {
   border-radius: 8px;
 }
 
-.App form .start button:focus {
+.App .timer-settings .start button:focus {
   outline: none;
   -webkit-box-shadow: 0 0 5px deepskyblue;
           box-shadow: 0 0 5px deepskyblue;

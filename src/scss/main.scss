@@ -49,7 +49,7 @@ body {
   @include responsive(360px) {
     width: 100%;
   }
-  form {
+  .timer-settings {
     .intervals {
       margin: 10px 0;
       input {
@@ -96,7 +96,7 @@ body {
         }
       }
     }
-    .duration {
+    .workout-duration {
       display: flex;
       justify-content: space-between;
     }
