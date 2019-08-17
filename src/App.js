@@ -1,9 +1,11 @@
-import React, { useReducer, useEffect, useRef } from "react";
+import React, { Fragment, useReducer, useEffect, useRef } from "react";
 import "./scss/main.css";
 
 import noSleepLibrary from "nosleep.js";
 
 import reducer from "./reducer";
+
+import getWorkoutTime from "./utils/getWorkoutTime";
 
 import ready from "./sounds/ready.mp3";
 import steady from "./sounds/steady.mp3";
@@ -21,10 +23,12 @@ const noSleep = new noSleepLibrary();
 
 const initialState = {
   intervals: 3,
+  currentInterval: 0,
   work: 15,
   rest: 45,
   working: false,
   duration: undefined,
+  remainingTime: undefined,
   bars: [],
   progressStatusText: "",
   progressStatusClass: "",
@@ -73,7 +77,13 @@ const App = () => {
       playSound(steadySound);
     }, 1500);
     setTimeout(() => {
-      // runSound.play();
+      dispatch({ type: "nextInterval" });
+      let remainingTimerReducer = setInterval(() => {
+        dispatch({
+          type: "remainingTypeReduceSecond"
+        });
+        console.log(state);
+      }, 1000);
 
       let timer;
       let turn = "Work";
@@ -95,8 +105,11 @@ const App = () => {
       function playRoundMusic() {
         if (turn === "Work") {
           playSound(workSound);
+          dispatch({ type: "nextInterval" });
         } else {
-          playSound(restSound);
+          if (state.intervals > 1) {
+            playSound(restSound);
+          }
         }
       }
 
@@ -119,6 +132,7 @@ const App = () => {
         noSleep.disable();
         ball.current.style.animation = "";
         dispatch({ type: "finishWorkout" });
+        clearInterval(remainingTimerReducer);
         dispatch({
           type: "setWorkingStatus",
           payload: {
@@ -130,20 +144,6 @@ const App = () => {
         clearInterval(timer);
       }, state.duration * 1000);
     }, 3000);
-  }
-
-  function getWorkoutTime() {
-    let seconds = state.duration % 60;
-    if (seconds < 10) seconds = "0" + seconds;
-    let minutes = Math.floor(state.duration / 60);
-    let hours = Math.floor(state.duration / 3600);
-    if (state.duration >= 3600) {
-      minutes = minutes % 60;
-      if (minutes < 10) minutes = "0" + minutes;
-      return `${hours}:${minutes}:${seconds}`;
-    } else {
-      return `${minutes}:${seconds}`;
-    }
   }
 
   useEffect(() => {
@@ -200,8 +200,8 @@ const App = () => {
               required
             />
           </div>
-          <div className="rest-work">
-            <section className="work">
+          <div className="timing">
+            <section className="timing-work">
               <label>
                 Work <span>(s)</span>
               </label>
@@ -215,7 +215,7 @@ const App = () => {
                 required
               />
             </section>
-            <section className="rest">
+            <section className="timing-rest">
               <label>
                 Rest <span>(s)</span>
               </label>
@@ -232,7 +232,7 @@ const App = () => {
           </div>
           <div className="duration">
             <em>Workout Duration:</em>
-            <strong>{getWorkoutTime()}</strong>
+            <strong>{getWorkoutTime(state.duration)}</strong>
           </div>
           <p className="sounds">
             <em>Sounds:</em>
@@ -250,16 +250,19 @@ const App = () => {
           </div>
         </form>
       ) : (
-        ""
+        <Fragment>
+          <div className="remaining-time">
+            <span>
+              {state.currentInterval} / {state.intervals}
+            </span>
+            <span>{getWorkoutTime(state.remainingTime)}</span>
+          </div>
+          <p className={`status ${state.progressStatusClass}`}>
+            {state.progressStatusText}
+          </p>
+        </Fragment>
       )}
 
-      {state.progressStatusText ? (
-        <p className={`status ${state.progressStatusClass}`}>
-          {state.progressStatusText}
-        </p>
-      ) : (
-        ""
-      )}
       <div className="progress">
         {state.bars.map((bar, index) => (
           <div

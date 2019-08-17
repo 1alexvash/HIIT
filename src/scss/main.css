@@ -99,7 +99,7 @@ body:after {
           box-shadow: 0 0 5px deepskyblue;
 }
 
-.App form .rest-work {
+.App form .timing {
   margin: 10px 0;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -109,37 +109,37 @@ body:after {
           justify-content: space-between;
 }
 
-.App form .rest-work section {
+.App form .timing section {
   border: 3px solid black;
   width: 40%;
 }
 
-.App form .rest-work section.rest label {
+.App form .timing section.timing-rest label {
   background: -webkit-gradient(linear, left top, left bottom, from(green), color-stop(#00cd00), to(green));
   background: linear-gradient(green, #00cd00, green);
 }
 
-.App form .rest-work section.work label {
+.App form .timing section.timing-work label {
   background: -webkit-gradient(linear, left top, left bottom, from(red), color-stop(#b30000), to(red));
   background: linear-gradient(red, #b30000, red);
 }
 
-.App form .rest-work section label {
+.App form .timing section label {
   display: block;
   width: 100%;
   padding: 5px 10px;
   text-shadow: 1px 2px 3px #333;
 }
 
-.App form .rest-work section label span {
+.App form .timing section label span {
   font-size: 16px;
 }
 
-.App form .rest-work section input {
+.App form .timing section input {
   padding: 5px 10px;
 }
 
-.App form .rest-work section input:focus {
+.App form .timing section input:focus {
   outline: none;
   -webkit-box-shadow: 0 0 5px deepskyblue;
           box-shadow: 0 0 5px deepskyblue;
@@ -196,6 +196,15 @@ body:after {
   outline: none;
   -webkit-box-shadow: 0 0 5px deepskyblue;
           box-shadow: 0 0 5px deepskyblue;
+}
+
+.App .remaining-time {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .App .status {

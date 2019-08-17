@@ -23,7 +23,8 @@ export default function reducer(state, action) {
     case "startWorkout":
       return {
         ...state,
-        working: true
+        working: true,
+        remainingTime: state.duration
       };
     case "setWorkingStatus":
       return {
@@ -31,10 +32,22 @@ export default function reducer(state, action) {
         progressStatusText: payload.text,
         progressStatusClass: payload.class
       };
+    case "nextInterval": {
+      return {
+        ...state,
+        currentInterval: state.currentInterval + 1
+      };
+    }
+    case "remainingTypeReduceSecond":
+      return {
+        ...state,
+        remainingTime: state.remainingTime - 1
+      };
     case "finishWorkout":
       return {
         ...state,
-        working: false
+        working: false,
+        currentInterval: 0
       };
     case "getSettings":
       const settings = JSON.parse(localStorage.settings);

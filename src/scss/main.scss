@@ -61,19 +61,19 @@ body {
         }
       }
     }
-    .rest-work {
+    .timing {
       margin: 10px 0;
       display: flex;
       justify-content: space-between;
       section {
         border: 3px solid black;
         width: 40%;
-        &.rest {
+        &.timing-rest {
           label {
             background: linear-gradient(green, lighten(green, 15%), green);
           }
         }
-        &.work {
+        &.timing-work {
           label {
             background: linear-gradient(red, darken(red, 15%), red);
           }
@@ -133,6 +133,10 @@ body {
         }
       }
     }
+  }
+  .remaining-time {
+    display: flex;
+    justify-content: space-between;
   }
   .status {
     text-align: center;
