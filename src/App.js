@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useEffect, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import "./scss/main.css";
 
 import TimerSettings from "./components/TimerSettings/TimerSettings";
@@ -7,13 +7,15 @@ import Bars from "./components/Bars/Bars";
 
 import noSleepLibrary from "nosleep.js";
 
-import reducer from "./reducer";
-
 import ready from "./sounds/ready.mp3";
 import steady from "./sounds/steady.mp3";
 import work from "./sounds/work.mp3";
 import rest from "./sounds/rest.mp3";
 import congratulations from "./sounds/congratulations.mp3";
+
+import { StoreProvider, useStoreState, useStoreActions } from "easy-peasy";
+
+import store from "./store";
 
 const readySound = new Audio(ready);
 const steadySound = new Audio(steady);
@@ -23,22 +25,9 @@ const congratulationsSound = new Audio(congratulations);
 
 const noSleep = new noSleepLibrary();
 
-const initialState = {
-  intervals: 3,
-  currentInterval: 0,
-  work: 15,
-  rest: 45,
-  working: false,
-  duration: undefined,
-  remainingTime: undefined,
-  bars: [],
-  progressStatusText: "",
-  progressStatusClass: "",
-  soundsAvailable: true
-};
-
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const state = useStoreState((state) => state);
+  const dispatch = useStoreActions((actions) => actions.dispatch);
 
   const ball = useRef();
 
@@ -68,13 +57,13 @@ const App = () => {
     dispatch({ type: "startWorkout" });
     dispatch({
       type: "setWorkingStatus",
-      payload: { text: "Ready", class: "white" }
+      payload: { text: "Ready", class: "white" },
     });
     playSound(readySound);
     setTimeout(() => {
       dispatch({
         type: "setWorkingStatus",
-        payload: { text: "Steady", class: "white" }
+        payload: { text: "Steady", class: "white" },
       });
       playSound(steadySound);
     }, 1500);
@@ -82,7 +71,7 @@ const App = () => {
       dispatch({ type: "nextInterval" });
       let remainingTimerReducer = setInterval(() => {
         dispatch({
-          type: "remainingTypeReduceSecond"
+          type: "remainingTypeReduceSecond",
         });
       }, 1000);
 
@@ -98,8 +87,8 @@ const App = () => {
           type: "setWorkingStatus",
           payload: {
             text: turn,
-            class: turn === "Work" ? "red" : "green"
-          }
+            class: turn === "Work" ? "red" : "green",
+          },
         });
       }
 
@@ -114,7 +103,7 @@ const App = () => {
         }
       }
 
-      let newInterval = delay => {
+      let newInterval = (delay) => {
         timer = setTimeout(() => {
           changeTurn();
           updateText();
@@ -138,8 +127,8 @@ const App = () => {
           type: "setWorkingStatus",
           payload: {
             text: "",
-            class: "white"
-          }
+            class: "white",
+          },
         });
         playSound(congratulationsSound);
         clearInterval(timer);
@@ -157,12 +146,12 @@ const App = () => {
     for (let index = 0; index < intervals; index++) {
       bars.push({
         type: "work",
-        width: (work / duration) * 100
+        width: (work / duration) * 100,
       });
       if (index + 1 < intervals) {
         bars.push({
           type: "rest",
-          width: (rest / duration) * 100
+          width: (rest / duration) * 100,
         });
       }
     }
@@ -178,13 +167,16 @@ const App = () => {
         intervals,
         work,
         rest,
-        soundsAvailable
+        soundsAvailable,
       });
     } else {
       dispatch({ type: "getSettings" });
     }
     // eslint-disable-next-line
   }, []);
+
+  // const start = () => {};
+  // const inputOnChange = () => {};
 
   return (
     <div className="App">
@@ -209,4 +201,8 @@ const App = () => {
   );
 };
 
-export default App;
+export default () => (
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>
+);
