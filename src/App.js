@@ -29,6 +29,32 @@ const App = () => {
   const state = useStoreState((state) => state);
   const dispatch = useStoreActions((actions) => actions.dispatch);
 
+  // const updateInput = useStoreActions((actions) => actions.updateInput);
+  // const updateBars = useStoreActions((actions) => actions.updateBars);
+  // const startWorkout = useStoreActions((actions) => actions.startWorkout);
+  // const setWorkingStatus = useStoreActions(
+  //   (actions) => actions.setWorkingStatus
+  // );
+  // const nextInterval = useStoreActions((actions) => actions.nextInterval);
+  // const remainingTypeReduceSecond = useStoreActions(
+  //   (actions) => actions.remainingTypeReduceSecond
+  // );
+  // const finishWorkout = useStoreActions((actions) => actions.finishWorkout);
+  // const getSettings = useStoreActions((actions) => actions.getSettings);
+  // const toggleSounds = useStoreActions((actions) => actions.toggleSounds);
+
+  const {
+    updateInput,
+    updateBars,
+    startWorkout,
+    setWorkingStatus,
+    nextInterval,
+    remainingTypeReduceSecond,
+    finishWorkout,
+    getSettings,
+    toggleSounds,
+  } = useStoreActions((actions) => actions);
+
   const ball = useRef();
 
   function inputOnChange(e) {
@@ -36,7 +62,7 @@ const App = () => {
       const value = parseInt(e.target.value);
       e.target.value = value;
       const field = [e.target.name];
-      dispatch({ type: "updateInput", payload: { field, value } });
+      updateInput({ field, value });
     }
   }
 
@@ -185,7 +211,6 @@ const App = () => {
           start={start}
           inputOnChange={inputOnChange}
           state={state}
-          dispatch={dispatch}
         />
       ) : (
         <Fragment>
