@@ -13,79 +13,53 @@ const store = createStore({
   progressStatusClass: "",
   soundsAvailable: true,
   updateInput: action((state, payload) => {
+    const { field, value } = payload;
+
     let newSettings = JSON.parse(localStorage.settings);
     newSettings = {
       ...newSettings,
-      [payload.field]: payload.value,
+      [field]: value,
     };
     localStorage.settings = JSON.stringify(newSettings);
-    state[payload.field] = payload.value;
+    state[field] = value;
   }),
-  updateBars: action((state, payload) => {}),
-  startWorkout: action((state, payload) => {}),
-  setWorkingStatus: action((state, payload) => {}),
-  nextInterval: action((state, payload) => {}),
-  remainingTypeReduceSecond: action((state, payload) => {}),
-  finishWorkout: action((state, payload) => {}),
-  getSettings: action((state, payload) => {}),
+  updateBars: action((state, payload) => {
+    const { bars, duration } = payload;
+
+    state.bars = bars;
+    state.duration = duration;
+  }),
+  startWorkout: action((state) => {
+    state.working = true;
+    state.remainingTime = state.duration;
+  }),
+  setWorkingStatus: action((state, payload) => {
+    state.progressStatusText = payload.text;
+    state.progressStatusClass = payload.class;
+  }),
+  nextInterval: action((state) => {
+    state.currentInterval = state.currentInterval + 1;
+  }),
+  remainingTypeReduceSecond: action((state) => {
+    state.remainingTime = state.remainingTime - 1;
+  }),
+  finishWorkout: action((state) => {
+    state.working = false;
+    state.currentInterval = 0;
+  }),
+  getSettings: action((state, payload) => {
+    const settings = JSON.parse(localStorage.settings);
+
+    state.intervals = settings.intervals;
+    state.rest = settings.rest;
+    state.work = settings.work;
+    state.soundsAvailable = settings.soundsAvailable;
+  }),
   toggleSounds: action((state, payload) => {
     const settings = JSON.parse(localStorage.settings);
     settings.soundsAvailable = payload;
     localStorage.settings = JSON.stringify(settings);
     state.soundsAvailable = payload;
-  }),
-  dispatch: action((state, action) => {
-    const { type, payload } = action;
-
-    switch (type) {
-      case "updateBars":
-        const { bars, duration } = payload;
-        return {
-          ...state,
-          bars: bars,
-          duration: duration,
-        };
-      case "startWorkout":
-        return {
-          ...state,
-          working: true,
-          remainingTime: state.duration,
-        };
-      case "setWorkingStatus":
-        return {
-          ...state,
-          progressStatusText: payload.text,
-          progressStatusClass: payload.class,
-        };
-      case "nextInterval": {
-        return {
-          ...state,
-          currentInterval: state.currentInterval + 1,
-        };
-      }
-      case "remainingTypeReduceSecond":
-        return {
-          ...state,
-          remainingTime: state.remainingTime - 1,
-        };
-      case "finishWorkout":
-        return {
-          ...state,
-          working: false,
-          currentInterval: 0,
-        };
-      case "getSettings":
-        const settings = JSON.parse(localStorage.settings);
-        return {
-          ...state,
-          intervals: settings.intervals,
-          rest: settings.rest,
-          work: settings.work,
-          soundsAvailable: settings.soundsAvailable,
-        };
-      default:
-        return state;
-    }
   }),
 });
 

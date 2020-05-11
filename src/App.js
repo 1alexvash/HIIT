@@ -27,21 +27,6 @@ const noSleep = new noSleepLibrary();
 
 const App = () => {
   const state = useStoreState((state) => state);
-  const dispatch = useStoreActions((actions) => actions.dispatch);
-
-  // const updateInput = useStoreActions((actions) => actions.updateInput);
-  // const updateBars = useStoreActions((actions) => actions.updateBars);
-  // const startWorkout = useStoreActions((actions) => actions.startWorkout);
-  // const setWorkingStatus = useStoreActions(
-  //   (actions) => actions.setWorkingStatus
-  // );
-  // const nextInterval = useStoreActions((actions) => actions.nextInterval);
-  // const remainingTypeReduceSecond = useStoreActions(
-  //   (actions) => actions.remainingTypeReduceSecond
-  // );
-  // const finishWorkout = useStoreActions((actions) => actions.finishWorkout);
-  // const getSettings = useStoreActions((actions) => actions.getSettings);
-  // const toggleSounds = useStoreActions((actions) => actions.toggleSounds);
 
   const {
     updateInput,
@@ -52,7 +37,6 @@ const App = () => {
     remainingTypeReduceSecond,
     finishWorkout,
     getSettings,
-    toggleSounds,
   } = useStoreActions((actions) => actions);
 
   const ball = useRef();
@@ -80,25 +64,17 @@ const App = () => {
 
     ball.current.style.animation = `pushBall ${state.duration}s linear 3s`;
 
-    dispatch({ type: "startWorkout" });
-    dispatch({
-      type: "setWorkingStatus",
-      payload: { text: "Ready", class: "white" },
-    });
+    startWorkout();
+    setWorkingStatus({ text: "Ready", class: "white" });
     playSound(readySound);
     setTimeout(() => {
-      dispatch({
-        type: "setWorkingStatus",
-        payload: { text: "Steady", class: "white" },
-      });
+      setWorkingStatus({ text: "Steady", class: "white" });
       playSound(steadySound);
     }, 1500);
     setTimeout(() => {
-      dispatch({ type: "nextInterval" });
+      nextInterval();
       let remainingTimerReducer = setInterval(() => {
-        dispatch({
-          type: "remainingTypeReduceSecond",
-        });
+        remainingTypeReduceSecond();
       }, 1000);
 
       let timer;
@@ -109,19 +85,16 @@ const App = () => {
       }
 
       function updateText() {
-        dispatch({
-          type: "setWorkingStatus",
-          payload: {
-            text: turn,
-            class: turn === "Work" ? "red" : "green",
-          },
+        setWorkingStatus({
+          text: turn,
+          class: turn === "Work" ? "red" : "green",
         });
       }
 
       function playRoundMusic() {
         if (turn === "Work") {
           playSound(workSound);
-          dispatch({ type: "nextInterval" });
+          nextInterval();
         } else {
           if (state.intervals > 1) {
             playSound(restSound);
@@ -147,14 +120,11 @@ const App = () => {
       setTimeout(() => {
         noSleep.disable();
         ball.current.style.animation = "";
-        dispatch({ type: "finishWorkout" });
+        finishWorkout();
         clearInterval(remainingTimerReducer);
-        dispatch({
-          type: "setWorkingStatus",
-          payload: {
-            text: "",
-            class: "white",
-          },
+        setWorkingStatus({
+          text: "",
+          class: "white",
         });
         playSound(congratulationsSound);
         clearInterval(timer);
@@ -181,7 +151,7 @@ const App = () => {
         });
       }
     }
-    dispatch({ type: "updateBars", payload: { bars, duration } });
+    updateBars({ bars, duration });
 
     // eslint-disable-next-line
   }, [state.intervals, state.work, state.rest]);
@@ -196,7 +166,7 @@ const App = () => {
         soundsAvailable,
       });
     } else {
-      dispatch({ type: "getSettings" });
+      getSettings();
     }
     // eslint-disable-next-line
   }, []);
