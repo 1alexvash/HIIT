@@ -225,7 +225,7 @@ body:after {
   color: red;
 }
 
-.App .progress {
+.App .progress-bar {
   margin: 10px 0;
   border: 3px solid black;
   position: relative;
@@ -236,17 +236,17 @@ body:after {
   display: flex;
 }
 
-.App .progress .bar.rest {
+.App .progress-bar .bar.rest {
   background: -webkit-gradient(linear, left top, left bottom, from(deepskyblue), to(#66d9ff));
   background: linear-gradient(deepskyblue, #66d9ff);
 }
 
-.App .progress .bar.work {
+.App .progress-bar .bar.work {
   background: -webkit-gradient(linear, left top, left bottom, from(red), to(#ff3333));
   background: linear-gradient(red, #ff3333);
 }
 
-.App .progress .ball {
+.App .progress-bar .ball {
   position: absolute;
   top: 50%;
   left: 0;

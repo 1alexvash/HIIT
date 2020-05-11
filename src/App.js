@@ -3,7 +3,7 @@ import "./scss/main.css";
 
 import TimerSettings from "./components/TimerSettings/TimerSettings";
 import WorkoutStatus from "./components/WorkoutStatus/WorkoutStatus";
-import Bars from "./components/Bars/Bars";
+import ProgressBar from "./components/ProgressBar/ProgressBar";
 
 import noSleepLibrary from "nosleep.js";
 
@@ -18,6 +18,8 @@ import { StoreProvider, useStoreState, useStoreActions } from "easy-peasy";
 import store from "./store";
 
 const noSleep = new noSleepLibrary();
+
+localStorage.clear();
 
 const App = () => {
   const state = useStoreState((state) => state);
@@ -165,11 +167,7 @@ const App = () => {
       ) : (
         <WorkoutStatus state={state} />
       )}
-
-      <div className="progress">
-        <Bars bars={state.bars} />
-        <div className="ball" ref={ball} />
-      </div>
+      <ProgressBar bars={state.bars} ball={ball} />
     </div>
   );
 };
