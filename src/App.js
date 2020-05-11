@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import "./scss/main.css";
 
 import TimerSettings from "./components/TimerSettings/TimerSettings";
@@ -7,21 +7,15 @@ import Bars from "./components/Bars/Bars";
 
 import noSleepLibrary from "nosleep.js";
 
-import ready from "./sounds/ready.mp3";
-import steady from "./sounds/steady.mp3";
-import work from "./sounds/work.mp3";
-import rest from "./sounds/rest.mp3";
-import congratulations from "./sounds/congratulations.mp3";
+import readySound from "./sounds/ready.mp3";
+import steadySound from "./sounds/steady.mp3";
+import workSound from "./sounds/work.mp3";
+import restSound from "./sounds/rest.mp3";
+import congratulationsSound from "./sounds/congratulations.mp3";
 
 import { StoreProvider, useStoreState, useStoreActions } from "easy-peasy";
 
 import store from "./store";
-
-const readySound = new Audio(ready);
-const steadySound = new Audio(steady);
-const workSound = new Audio(work);
-const restSound = new Audio(rest);
-const congratulationsSound = new Audio(congratulations);
 
 const noSleep = new noSleepLibrary();
 
@@ -29,7 +23,6 @@ const App = () => {
   const state = useStoreState((state) => state);
 
   const {
-    updateInput,
     updateBars,
     startWorkout,
     setWorkingStatus,
@@ -41,21 +34,12 @@ const App = () => {
 
   const ball = useRef();
 
-  function inputOnChange(e) {
-    if (e.target.value !== "" && e.target.value !== "0") {
-      const value = parseInt(e.target.value);
-      e.target.value = value;
-      const field = [e.target.name];
-      updateInput({ field, value });
-    }
-  }
-
-  function playSound(sound) {
+  const playSound = (src) => {
     if (state.soundsAvailable) {
-      sound.play();
-      sound.currentTime = 0;
+      var audio = new Audio(src);
+      audio.play();
     }
-  }
+  };
 
   function start(e) {
     e.preventDefault();
@@ -177,15 +161,9 @@ const App = () => {
   return (
     <div className="App">
       {state.working === false ? (
-        <TimerSettings
-          start={start}
-          inputOnChange={inputOnChange}
-          state={state}
-        />
+        <TimerSettings start={start} state={state} />
       ) : (
-        <Fragment>
-          <WorkoutStatus state={state} />
-        </Fragment>
+        <WorkoutStatus state={state} />
       )}
 
       <div className="progress">
