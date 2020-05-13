@@ -6,9 +6,11 @@ const store = createStore({
   work: 15,
   rest: 45,
   working: false,
-  duration: undefined,
+  totalTime: undefined,
+  timePassed: 0,
   remainingTime: undefined,
   bars: [],
+  intervalsDuration: [],
   progressStatusText: "",
   progressStatusClass: "",
   soundsAvailable: true,
@@ -24,14 +26,20 @@ const store = createStore({
     state[field] = value;
   }),
   updateBars: action((state, payload) => {
-    const { bars, duration } = payload;
+    const { bars, totalTime } = payload;
 
     state.bars = bars;
-    state.duration = duration;
+    state.totalTime = totalTime;
   }),
   startWorkout: action((state) => {
     state.working = true;
-    state.remainingTime = state.duration;
+    state.timePassed = 0;
+    state.remainingTime = state.totalTime;
+
+    state.intervalsDuration = state.bars.map((bar) => bar.duration);
+    for (let i = 1; i < state.intervalsDuration.length; i++) {
+      state.intervalsDuration[i] += state.intervalsDuration[i - 1];
+    }
   }),
   setWorkingStatus: action((state, payload) => {
     state.progressStatusText = payload.text;
@@ -41,11 +49,14 @@ const store = createStore({
     state.currentInterval = state.currentInterval + 1;
   }),
   remainingTypeReduceSecond: action((state) => {
-    state.remainingTime = state.remainingTime - 1;
+    state.timePassed = state.timePassed + 1;
+    state.remainingTime = state.totalTime - state.timePassed;
   }),
   finishWorkout: action((state) => {
     state.working = false;
+    state.timePassed = 0;
     state.currentInterval = 0;
+    state.intervalsDuration = [];
   }),
   getSettings: action((state, payload) => {
     const settings = JSON.parse(localStorage.settings);

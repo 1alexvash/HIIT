@@ -4,15 +4,8 @@ import StatusText from "./StatusText/StatusText";
 
 const WorkoutStatus = ({ state }) => (
   <Fragment>
-    <RemainingTime
-      currentInterval={state.currentInterval}
-      intervals={state.intervals}
-      remainingTime={state.remainingTime}
-    />
-    <StatusText
-      progressStatusClass={state.progressStatusClass}
-      progressStatusText={state.progressStatusText}
-    />
+    <RemainingTime />
+    <StatusText />
   </Fragment>
 );
 

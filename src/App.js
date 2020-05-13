@@ -19,8 +19,6 @@ import store from "./store";
 
 const noSleep = new noSleepLibrary();
 
-localStorage.clear();
-
 const App = () => {
   const state = useStoreState((state) => state);
 
@@ -48,7 +46,7 @@ const App = () => {
 
     noSleep.enable();
 
-    ball.current.style.animation = `pushBall ${state.duration}s linear 3s`;
+    ball.current.style.animation = `pushBall ${state.totalTime}s linear 3s`;
 
     startWorkout();
     setWorkingStatus({ text: "Ready", class: "white" });
@@ -114,7 +112,7 @@ const App = () => {
         });
         playSound(congratulationsSound);
         clearInterval(timer);
-      }, state.duration * 1000);
+      }, state.totalTime * 1000);
     }, 3000);
   }
 
@@ -123,21 +121,23 @@ const App = () => {
 
     let bars = [];
 
-    const duration = intervals * (rest + work) - rest;
+    const totalTime = intervals * (rest + work) - rest;
 
     for (let index = 0; index < intervals; index++) {
       bars.push({
         type: "work",
-        width: (work / duration) * 100,
+        width: (work / totalTime) * 100,
+        duration: work,
       });
       if (index + 1 < intervals) {
         bars.push({
           type: "rest",
-          width: (rest / duration) * 100,
+          width: (rest / totalTime) * 100,
+          duration: rest,
         });
       }
     }
-    updateBars({ bars, duration });
+    updateBars({ bars, totalTime });
 
     // eslint-disable-next-line
   }, [state.intervals, state.work, state.rest]);
@@ -156,9 +156,6 @@ const App = () => {
     }
     // eslint-disable-next-line
   }, []);
-
-  // const start = () => {};
-  // const inputOnChange = () => {};
 
   return (
     <div className="App">
