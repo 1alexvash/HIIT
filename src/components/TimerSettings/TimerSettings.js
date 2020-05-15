@@ -27,7 +27,8 @@ const TimerSettings = ({ start, state, dispatch }) => {
         work={state.work}
         rest={state.rest}
       />
-      <WorkoutDuration duration={state.duration} />
+      <WorkoutDuration totalTime={state.totalTime} />
+
       <SoundsSettings
         soundsAvailable={state.soundsAvailable}
         dispatch={dispatch}

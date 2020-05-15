@@ -27,7 +27,7 @@ const RemainingTime = ({}) => {
       <p>
         {currentInterval} / {intervals}
       </p>
-      <p>{getIntervalTime()}</p>
+      <p>{getIntervalTime()}s</p>
       <p>{getWorkoutTime(remainingTime)}</p>
     </div>
   );

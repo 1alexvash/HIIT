@@ -162,7 +162,7 @@ const App = () => {
       {state.working === false ? (
         <TimerSettings start={start} state={state} />
       ) : (
-        <WorkoutStatus state={state} />
+        <WorkoutStatus />
       )}
       <ProgressBar bars={state.bars} ball={ball} />
     </div>
