@@ -123,6 +123,7 @@ body {
           darken(deepskyblue, 20%),
           deepskyblue
         );
+
         transition: 0.3s;
         &:hover {
           border-radius: 8px;
@@ -130,6 +131,11 @@ body {
         &:focus {
           outline: none;
           box-shadow: 0 0 5px deepskyblue;
+        }
+      }
+      &.disabled {
+        button {
+          background: linear-gradient(grey, darken(grey, 20%), grey);
         }
       }
     }

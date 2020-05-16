@@ -198,6 +198,11 @@ body:after {
           box-shadow: 0 0 5px deepskyblue;
 }
 
+.App .timer-settings .start.disabled button {
+  background: -webkit-gradient(linear, left top, left bottom, from(grey), color-stop(#4d4d4d), to(grey));
+  background: linear-gradient(grey, #4d4d4d, grey);
+}
+
 .App .remaining-time {
   display: -webkit-box;
   display: -ms-flexbox;

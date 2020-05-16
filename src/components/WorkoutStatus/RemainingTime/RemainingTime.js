@@ -3,7 +3,7 @@ import getWorkoutTime from "../../../utils/getWorkoutTime";
 
 import { useStoreState } from "easy-peasy";
 
-const RemainingTime = ({}) => {
+const RemainingTime = () => {
   const {
     currentInterval,
     intervals,

@@ -1,10 +1,10 @@
 import React from "react";
 import getWorkoutTime from "../../../utils/getWorkoutTime";
 
-const WorkoutDuration = ({ totalTime }) => (
+const WorkoutDuration = ({ totalTime, canStart }) => (
   <div className="workout-duration">
     <em>Workout Duration:</em>
-    <strong>{getWorkoutTime(totalTime)}</strong>
+    <strong>{canStart && getWorkoutTime(totalTime)}</strong>
   </div>
 );
 

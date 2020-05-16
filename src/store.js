@@ -5,6 +5,7 @@ const store = createStore({
   currentInterval: 0,
   work: 15,
   rest: 45,
+  canStart: true,
   working: false,
   totalTime: undefined,
   timePassed: 0,
@@ -22,14 +23,22 @@ const store = createStore({
       ...newSettings,
       [field]: value,
     };
-    localStorage.settings = JSON.stringify(newSettings);
+
     state[field] = value;
+
+    const canStart = state.intervals > 0 && state.work > 0 && state.rest > 0;
+    if (canStart) {
+      localStorage.settings = JSON.stringify(newSettings);
+    }
+    state.canStart = canStart;
   }),
   updateBars: action((state, payload) => {
     const { bars, totalTime } = payload;
 
-    state.bars = bars;
-    state.totalTime = totalTime;
+    if (state.canStart) {
+      state.bars = bars;
+      state.totalTime = totalTime;
+    }
   }),
   startWorkout: action((state) => {
     state.working = true;
@@ -65,6 +74,8 @@ const store = createStore({
     state.rest = settings.rest;
     state.work = settings.work;
     state.soundsAvailable = settings.soundsAvailable;
+
+    state.canStart = state.intervals > 0 && state.work > 0 && state.rest > 0;
   }),
   toggleSounds: action((state, payload) => {
     const settings = JSON.parse(localStorage.settings);

@@ -5,7 +5,7 @@ const Intervals = ({ inputOnChange, intervals }) => (
     Intervals:
     <input
       type="number"
-      onChange={e => inputOnChange(e)}
+      onChange={(e) => inputOnChange(e)}
       name="intervals"
       value={intervals}
       min="1"
