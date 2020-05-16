@@ -164,7 +164,7 @@ const App = () => {
       ) : (
         <WorkoutStatus />
       )}
-      <ProgressBar bars={state.bars} ball={ball} />
+      <ProgressBar bars={state.bars} ball={ball} canStart={state.canStart} />
     </div>
   );
 };

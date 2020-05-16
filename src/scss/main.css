@@ -282,6 +282,10 @@ body:after {
   }
 }
 
+.App .progress-bar.not-active {
+  opacity: 0.5;
+}
+
 @-webkit-keyframes ball {
   from {
     background: green;

@@ -192,6 +192,9 @@ body {
         }
       }
     }
+    &.not-active {
+      opacity: 0.5;
+    }
   }
 }
 
